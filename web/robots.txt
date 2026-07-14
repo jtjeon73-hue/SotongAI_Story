@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sotongware-ai-story.web.app/sitemap.xml

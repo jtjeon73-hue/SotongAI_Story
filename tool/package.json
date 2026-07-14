@@ -1,0 +1,13 @@
+{
+  "name": "sotong-ai-story-render-tool",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Renders branding PNG assets (favicon, app icons, OG image) from SVG sources for Sotong AI Story.",
+  "main": "render_ai_story_icons.js",
+  "scripts": {
+    "render": "node render_ai_story_icons.js"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

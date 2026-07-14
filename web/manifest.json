@@ -1,0 +1,16 @@
+{
+  "name": "소통AI스토리",
+  "short_name": "AI스토리",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F4F7FB",
+  "theme_color": "#2764D8",
+  "description": "AI의 역사, 변천, 핵심 개념, 활용 도구, 실전 워크플로와 미래 전망을 제공하는 소통웨어 공개 AI 지식 플랫폼",
+  "orientation": "any",
+  "icons": [
+    {"src": "icons/Icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icons/Icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icons/Icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "icons/Icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

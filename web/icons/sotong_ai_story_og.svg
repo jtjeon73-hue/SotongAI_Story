@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="ogBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#13243A"/>
+      <stop offset="100%" stop-color="#2764D8"/>
+    </linearGradient>
+    <linearGradient id="ogArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#14A8A0"/>
+      <stop offset="55%" stop-color="#7357D9"/>
+      <stop offset="100%" stop-color="#E8AA32"/>
+    </linearGradient>
+    <linearGradient id="ogIconBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#13243A"/>
+      <stop offset="100%" stop-color="#2764D8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="1200" height="630" fill="url(#ogBgGrad)"/>
+
+  <!-- Subtle timeline arc across the whole banner -->
+  <path d="M 0 520 Q 600 620 1200 460" fill="none" stroke="url(#ogArcGrad)" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="60" cy="509" r="7" fill="#14A8A0" opacity="0.8"/>
+  <circle cx="1140" cy="472" r="8" fill="#E8AA32" opacity="0.8"/>
+
+  <!-- Faint neural node network, right background -->
+  <g stroke="#FFFFFF" stroke-width="2" opacity="0.18">
+    <line x1="980" y1="120" x2="1060" y2="90"/>
+    <line x1="1060" y1="90" x2="1120" y2="150"/>
+    <line x1="980" y1="120" x2="1040" y2="190"/>
+    <line x1="1040" y1="190" x2="1120" y2="150"/>
+  </g>
+  <g opacity="0.35" fill="#FFFFFF">
+    <circle cx="980" cy="120" r="6"/>
+    <circle cx="1060" cy="90" r="5"/>
+    <circle cx="1120" cy="150" r="5"/>
+    <circle cx="1040" cy="190" r="5"/>
+  </g>
+
+  <!-- App icon badge, left side -->
+  <g transform="translate(70 165)">
+    <rect x="0" y="0" width="300" height="300" rx="60" fill="url(#ogIconBg)" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="2"/>
+    <path d="M 96 340 Q 256 420 416 260" transform="scale(0.586)" fill="none" stroke="url(#ogArcGrad)" stroke-width="17" stroke-linecap="round" opacity="0.85"/>
+    <g transform="translate(150 157)">
+      <path d="M 36 -63
+               C -11 -63 -41 -46 -41 -20
+               C -41 4 -18 14 5 20
+               C 27 26 41 33 41 48
+               C 41 64 20 75 -5 75
+               C -27 75 -46 67 -56 54"
+            transform="scale(1.7)"
+            fill="none"
+            stroke="#FFFFFF"
+            stroke-width="27"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </g>
+    <circle cx="119" cy="89" r="7" fill="#E8AA32"/>
+    <circle cx="181" cy="227" r="7" fill="#14A8A0"/>
+  </g>
+
+  <!-- Text content, right side -->
+  <g font-family="Malgun Gothic">
+    <text x="410" y="270" fill="#FFFFFF" font-size="84" font-weight="700">&#xC18C;&#xD1B5;AI&#xC2A4;&#xD1A0;&#xB9AC;</text>
+    <text x="412" y="330" fill="#E8E9F0" font-size="34" font-weight="500">AI &#xC5ED;&#xC0AC; &#183; &#xB3C4;&#xAD6C; &#183; &#xD65C;&#xC6A9; &#183; &#xBBF8;&#xB798;</text>
+    <text x="412" y="470" fill="#E8AA32" font-size="30" font-weight="600" letter-spacing="1">SotongWare</text>
+  </g>
+</svg>
