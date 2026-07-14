@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_constants.dart';
@@ -22,7 +23,11 @@ class SotongwareBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.hub_rounded, color: AppColors.purple, size: 28),
+          SizedBox(
+            width: 28,
+            height: 28,
+            child: SvgPicture.asset(AppConstants.brandingIconSvg),
+          ),
           const SizedBox(width: 14),
           Expanded(
             child: Column(

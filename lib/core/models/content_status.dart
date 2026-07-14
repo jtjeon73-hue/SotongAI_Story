@@ -10,6 +10,9 @@ enum ContentStatus {
   /// 일부만 검증되었거나 보조 출처로 뒷받침되는 콘텐츠.
   partiallyVerified,
 
+  /// 아직 검증이 완료되지 않아 추가 확인이 필요한 콘텐츠.
+  verificationRequired,
+
   /// 확정된 사실이 아닌 전망·분석성 콘텐츠.
   forecast,
 
@@ -18,6 +21,9 @@ enum ContentStatus {
 
   /// 더 이상 서비스되지 않거나 사용이 중단된 항목.
   inactive,
+
+  /// 검증 유효기간이 지나 재검증이 필요한 항목.
+  expired,
 
   /// 값이 없거나 인식할 수 없는 상태.
   unknown;
@@ -29,13 +35,18 @@ enum ContentStatus {
         return ContentStatus.verified;
       case 'partiallyVerified':
         return ContentStatus.partiallyVerified;
+      case 'verificationRequired':
+        return ContentStatus.verificationRequired;
       case 'forecast':
         return ContentStatus.forecast;
       case 'active':
         return ContentStatus.active;
       case 'inactive':
       case 'deprecated':
+      case 'discontinued':
         return ContentStatus.inactive;
+      case 'expired':
+        return ContentStatus.expired;
       default:
         return ContentStatus.unknown;
     }
@@ -48,12 +59,16 @@ enum ContentStatus {
         return '검증 완료';
       case ContentStatus.partiallyVerified:
         return '부분 검증';
+      case ContentStatus.verificationRequired:
+        return '검증 필요';
       case ContentStatus.forecast:
         return '전망·분석';
       case ContentStatus.active:
         return '서비스 중';
       case ContentStatus.inactive:
         return '서비스 종료';
+      case ContentStatus.expired:
+        return '검증 만료';
       case ContentStatus.unknown:
         return '상태 미확인';
     }

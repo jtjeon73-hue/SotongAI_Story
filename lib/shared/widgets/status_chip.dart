@@ -22,6 +22,10 @@ class StatusChip extends StatelessWidget {
         return AppColors.blue;
       case ContentStatus.inactive:
         return AppColors.muted;
+      case ContentStatus.verificationRequired:
+        return AppColors.gold;
+      case ContentStatus.expired:
+        return AppColors.error;
       case ContentStatus.unknown:
         return AppColors.muted;
     }
@@ -39,6 +43,10 @@ class StatusChip extends StatelessWidget {
         return Icons.bolt_rounded;
       case ContentStatus.inactive:
         return Icons.pause_circle_rounded;
+      case ContentStatus.verificationRequired:
+        return Icons.error_outline_rounded;
+      case ContentStatus.expired:
+        return Icons.event_busy_rounded;
       case ContentStatus.unknown:
         return Icons.help_rounded;
     }

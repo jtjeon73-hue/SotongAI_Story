@@ -23,7 +23,7 @@ class ToolCard extends StatelessWidget {
       description: tool.description,
       tags: [
         aiToolCategoryLabel(tool.category),
-        if (tool.koreanSupport) '한국어 지원',
+        if (tool.koreanSupportLevel.isSupportive) tool.koreanSupportLevel.label,
         if (tool.isFree) '무료 이용 가능',
       ],
       accentColor: AppColors.teal,

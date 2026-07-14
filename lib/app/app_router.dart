@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/constants/route_paths.dart';
+import '../core/services/seo_meta_service.dart';
 import '../features/about/about_page.dart';
 import '../features/concepts/concept_detail_page.dart';
 import '../features/concepts/concepts_page.dart';
@@ -41,6 +42,12 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: RoutePaths.home,
     errorBuilder: (context, state) => const Scaffold(body: NotFoundPage()),
+    redirect: (context, state) {
+      // 클라이언트 사이드 내비게이션마다 문서 제목/메타 태그를 갱신한다
+      // (웹 전용, 다른 플랫폼에서는 스텁 구현이 아무 동작도 하지 않는다).
+      SeoMetaService.updateForPath(state.uri.path);
+      return null;
+    },
     routes: [
       ShellRoute(
         builder: (context, state, child) {
@@ -80,7 +87,8 @@ class AppRouter {
           ),
           GoRoute(
             path: RoutePaths.tools,
-            builder: (context, state) => const ToolsPage(),
+            builder: (context, state) =>
+                ToolsPage(initialParams: state.uri.queryParameters),
           ),
           GoRoute(
             path: RoutePaths.toolsDetail,
@@ -156,7 +164,7 @@ class AppRouter {
           GoRoute(
             path: RoutePaths.search,
             builder: (context, state) =>
-                SearchPage(initialQuery: state.uri.queryParameters['q'] ?? ''),
+                SearchPage(initialParams: state.uri.queryParameters),
           ),
         ],
       ),

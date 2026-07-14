@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/app_scope.dart';
 import '../../shared/widgets/app_header.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/responsive_grid.dart';
 import '../tools/widgets/tool_card.dart';
@@ -12,6 +13,15 @@ class PopularAiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final repository = AppScope.of(context).repository;
+    return DeferredContent<void>(
+      load: repository.ensureTools,
+      loadingMessage: 'AI 도구를 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     final tools = AppScope.of(context).repository.popularTools;
 
     return SingleChildScrollView(

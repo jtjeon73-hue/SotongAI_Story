@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import '../../app/app_scope.dart';
 import '../../core/constants/route_paths.dart';
 import '../../core/models/timeline_entry.dart';
+import '../../core/repositories/content_repository.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/content_card.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/filter_chips.dart';
 import '../../shared/widgets/favorite_button.dart';
@@ -36,6 +38,14 @@ class _TimelinePageState extends State<TimelinePage> {
   @override
   Widget build(BuildContext context) {
     final repository = AppScope.of(context).repository;
+    return DeferredContent<void>(
+      load: repository.ensureTimeline,
+      loadingMessage: '연대표를 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context, repository),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, ContentRepository repository) {
     final all = repository.timeline;
 
     final categories = all.map((e) => e.category).toSet().toList()..sort();

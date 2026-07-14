@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'content_status.dart';
+
 /// 검색 결과가 가리키는 콘텐츠 종류.
 enum SearchResultType {
   timeline,
@@ -9,6 +11,8 @@ enum SearchResultType {
   useCase,
   workflow,
   glossary,
+  futureTrend,
+  source,
 }
 
 extension SearchResultTypeX on SearchResultType {
@@ -28,6 +32,10 @@ extension SearchResultTypeX on SearchResultType {
         return '워크플로';
       case SearchResultType.glossary:
         return '용어사전';
+      case SearchResultType.futureTrend:
+        return '미래 전망';
+      case SearchResultType.source:
+        return '출처';
     }
   }
 
@@ -47,6 +55,10 @@ extension SearchResultTypeX on SearchResultType {
         return Icons.account_tree_rounded;
       case SearchResultType.glossary:
         return Icons.menu_book_rounded;
+      case SearchResultType.futureTrend:
+        return Icons.insights_rounded;
+      case SearchResultType.source:
+        return Icons.link_rounded;
     }
   }
 }
@@ -59,6 +71,8 @@ class SearchResult {
     required this.title,
     required this.snippet,
     required this.routePath,
+    this.status = ContentStatus.unknown,
+    this.verifiedAt = '',
   });
 
   final SearchResultType type;
@@ -66,4 +80,10 @@ class SearchResult {
   final String title;
   final String snippet;
   final String routePath;
+
+  /// 검증 상태(가능한 경우). 필터 칩과 상태 배지 표시에 사용한다.
+  final ContentStatus status;
+
+  /// 마지막 검증일(`yyyy-MM-dd`, 가능한 경우). 최근 검증 순 정렬에 사용한다.
+  final String verifiedAt;
 }

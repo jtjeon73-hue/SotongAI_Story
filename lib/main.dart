@@ -36,8 +36,12 @@ class _BootstrapAppState extends State<_BootstrapApp> {
 
   Future<_Bootstrapped> _bootstrap() async {
     final repository = ContentRepository();
-    final favorites = await FavoritesStorage.create();
-    await repository.loadAll();
+    // 초기 화면을 최대한 빨리 보여주기 위해 가벼운 부트스트랩 데이터(공지,
+    // 홈 통계 캐시, 중간 크기 콘텐츠)만 기다린다. 목록이 큰 콘텐츠(타임라인/
+    // 도구/워크플로/용어사전)는 각 화면이 처음 필요할 때 지연 로딩한다.
+    final favoritesFuture = FavoritesStorage.create();
+    await repository.loadBootstrap();
+    final favorites = await favoritesFuture;
     return _Bootstrapped(repository: repository, favorites: favorites);
   }
 

@@ -53,6 +53,40 @@ List<String> asStringList(Object? value) {
   return const [];
 }
 
+/// [value]를 3상(tri-state) 불리언으로 변환한다.
+///
+/// 일반 [asBool]과 달리 값이 없거나(`null`) 인식할 수 없는 타입인 경우
+/// `false`로 단정하지 않고 `null`("확인 필요/미확인")을 반환한다.
+/// `koreanSupport`처럼 "미제공"과 "확인되지 않음"을 구분해야 하는 필드에 사용한다.
+bool? asTriStateBool(Object? value) {
+  if (value == null) return null;
+  if (value is bool) return value;
+  if (value is String) {
+    final normalized = value.trim().toLowerCase();
+    if (normalized == 'true') return true;
+    if (normalized == 'false') return false;
+    if (normalized.isEmpty ||
+        normalized == 'unknown' ||
+        normalized == 'unverified' ||
+        normalized == 'unconfirmed') {
+      return null;
+    }
+    return null;
+  }
+  return null;
+}
+
+/// [value]를 열거형 문자열로 변환한다.
+///
+/// [allowedValues]에 포함된 값만 유효한 것으로 인정하며, 값이 없거나
+/// 허용되지 않는 값이면 `null`("미확인")을 반환한다. 즉, 알 수 없는 값을
+/// 임의의 기본값으로 단정하지 않는다.
+String? asStringEnum(Object? value, Set<String> allowedValues) {
+  final str = asStringOrNull(value);
+  if (str == null) return null;
+  return allowedValues.contains(str) ? str : null;
+}
+
 /// [value]를 `Map<String, dynamic>`으로 안전하게 변환한다. null이면 빈 맵.
 Map<String, dynamic> asMap(Object? value) {
   if (value is Map) {

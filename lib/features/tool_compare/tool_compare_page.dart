@@ -6,6 +6,7 @@ import '../../core/models/ai_tool.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
 import '../../shared/widgets/app_header.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 
 /// AI 툴 비교 페이지. 최대 3개 도구를 선택해 나란히 비교한다.
@@ -41,6 +42,15 @@ class _ToolComparePageState extends State<ToolComparePage> {
 
   @override
   Widget build(BuildContext context) {
+    final repository = AppScope.of(context).repository;
+    return DeferredContent<void>(
+      load: repository.ensureTools,
+      loadingMessage: 'AI 도구를 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     final tools = AppScope.of(context).repository.tools;
     final selectedTools = _selectedIds.map((id) {
       return tools.firstWhere((t) => t.id == id);

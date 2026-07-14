@@ -57,6 +57,7 @@ lib/
   main.dart              # 데이터 로딩 부트스트랩 + 앱 실행
 assets/
   data/                  # 콘텐츠 JSON (sources, timeline, eras, ... )
+                         # content_index.json: 홈 통계용 개수 캐시(지연 로딩 전 즉시 표시)
   branding/              # 서비스 아이콘 SVG
 test/                    # 모델 파싱, 라우터, 반응형 레이아웃 테스트
 tool/
@@ -159,4 +160,4 @@ node render_ai_story_icons.js
 2. `dart run tool/validate_content_data.dart`로 정합성을 검사합니다.
 3. 관련 모델(`lib/core/models/`)의 필드 이름과 JSON 키가 일치하는지 확인합니다. 새 필드를 추가했다면 모델과 `ContentRepository`도 함께 갱신하세요.
 4. `flutter test`와 `flutter analyze`를 실행해 회귀가 없는지 확인합니다.
-5. 콘텐츠에 큰 변경이 있다면 `assets/data/site_updates.json`의 `contentLastVerified`, `pendingVerificationCount` 등을 함께 갱신하는 것을 권장합니다.
+5. 콘텐츠에 큰 변경이 있다면 `assets/data/site_updates.json`의 `contentLastVerified`와 `assets/data/content_index.json`의 개수/최근 검증일을 함께 갱신하는 것을 권장합니다. 검증 통계(검증 완료/부분 검증/검증 필요 등)는 더 이상 수동 입력값이 아니라 `ContentRepository.computeVerificationStats()`가 각 콘텐츠의 `status` 필드를 스캔해 자동으로 계산합니다.

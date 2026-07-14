@@ -256,6 +256,45 @@ void main() async {
   checkSectionFile('developer.json', ['topics']);
   checkSectionFile('safety.json', ['topics']);
 
+  // --- content_index.json ---
+  // 홈 화면이 지연 로딩 전에 즉시 통계를 보여주기 위해 사용하는 캐시 파일이다.
+  // 실제 데이터셋과 개수가 어긋나면 홈 통계가 부정확해지므로 항상 동기화 여부를 검사한다.
+  try {
+    final index = readMap('content_index.json');
+    void checkCount(String field, int actual) {
+      final declared = index[field];
+      if (declared is! int) {
+        errors.add('content_index.json: "$field" 필드가 없거나 정수가 아닙니다.');
+      } else if (declared != actual) {
+        errors.add(
+          'content_index.json: "$field" 값($declared)이 실제 개수($actual)와 다릅니다.',
+        );
+      }
+    }
+
+    checkCount('timelineCount', timeline.length);
+    checkCount('eraCount', eras.length);
+    checkCount('conceptCount', concepts.length);
+    checkCount('toolCount', tools.length);
+    checkCount('workflowCount', workflows.length);
+    checkCount('useCaseCount', useCases.length);
+    checkCount('glossaryCount', glossary.length);
+    checkCount('futureTrendCount', futureTrends.length);
+    checkCount('sourceCount', sources.length);
+
+    final recentVerifiedDate = index['recentVerifiedDate']?.toString() ?? '';
+    if (recentVerifiedDate.isEmpty) {
+      warnings.add('content_index.json: recentVerifiedDate가 비어있습니다.');
+    } else if (!dateRegex.hasMatch(recentVerifiedDate)) {
+      errors.add(
+        'content_index.json: recentVerifiedDate 값 "$recentVerifiedDate"이 '
+        'yyyy-MM-dd 형식이 아닙니다.',
+      );
+    }
+  } catch (e) {
+    errors.add('content_index.json 파싱 실패: $e');
+  }
+
   // --- 결과 출력 ---
   stdout.writeln('=== 소통AI스토리 데이터 검증 결과 ===');
   stdout.writeln(

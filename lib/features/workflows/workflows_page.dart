@@ -8,6 +8,7 @@ import '../../core/storage/favorites_storage.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/widgets/app_header.dart';
 import '../../shared/widgets/content_card.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/favorite_button.dart';
 import '../../shared/widgets/filter_chips.dart';
@@ -34,6 +35,15 @@ class _WorkflowsPageState extends State<WorkflowsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final repository = AppScope.of(context).repository;
+    return DeferredContent<void>(
+      load: repository.ensureWorkflows,
+      loadingMessage: '워크플로를 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     final workflows = AppScope.of(context).repository.workflows;
     final difficulties = workflows.map((w) => w.difficulty).toSet().toList();
 

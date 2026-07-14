@@ -6,6 +6,7 @@ import '../../core/repositories/content_repository.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
 import '../../shared/widgets/app_header.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/filter_chips.dart';
 import '../../shared/widgets/search_field.dart';
@@ -36,6 +37,14 @@ class _GlossaryPageState extends State<GlossaryPage> {
   @override
   Widget build(BuildContext context) {
     final repository = AppScope.of(context).repository;
+    return DeferredContent<void>(
+      load: repository.ensureGlossary,
+      loadingMessage: '용어사전을 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context, repository),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, ContentRepository repository) {
     final all = repository.glossary;
     final categories = all.map((e) => e.category).toSet().toList()..sort();
 

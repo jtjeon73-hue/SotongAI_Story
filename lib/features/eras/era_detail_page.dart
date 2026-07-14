@@ -5,9 +5,11 @@ import '../../app/app_scope.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/route_paths.dart';
 import '../../core/models/timeline_entry.dart';
+import '../../core/repositories/content_repository.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
 import '../../shared/widgets/app_header.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/share_button.dart';
 import '../../shared/widgets/source_list.dart';
@@ -22,6 +24,16 @@ class EraDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repository = AppScope.of(context).repository;
+    // "관련 연대표 사건" 섹션이 지연 로딩되는 타임라인 데이터를 참조하므로
+    // 미리 로드를 보장한다(시대 자체 정보는 이미 부트스트랩에 포함되어 있음).
+    return DeferredContent<void>(
+      load: repository.ensureTimeline,
+      loadingMessage: '시대 정보를 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context, repository),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, ContentRepository repository) {
     final era = repository.eraById(id);
 
     if (era == null) {

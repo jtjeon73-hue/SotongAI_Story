@@ -6,10 +6,12 @@ import '../../core/constants/app_constants.dart';
 import '../../core/constants/route_paths.dart';
 import '../../core/models/ai_tool.dart';
 import '../../core/models/workflow.dart';
+import '../../core/repositories/content_repository.dart';
 import '../../core/storage/favorites_storage.dart';
 import '../../shared/theme/app_colors.dart';
 import '../../shared/theme/app_text_styles.dart';
 import '../../shared/widgets/app_header.dart';
+import '../../shared/widgets/deferred_content.dart';
 import '../../shared/widgets/empty_state.dart';
 import '../../shared/widgets/favorite_button.dart';
 import '../../shared/widgets/share_button.dart';
@@ -22,9 +24,25 @@ class WorkflowDetailPage extends StatelessWidget {
 
   final String id;
 
+  Future<void> _ensureAll(ContentRepository repository) async {
+    // 추천/관련 도구 카드를 표시하기 위해 도구 데이터도 함께 로드한다.
+    await Future.wait([
+      repository.ensureWorkflows(),
+      repository.ensureTools(),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     final repository = AppScope.of(context).repository;
+    return DeferredContent<void>(
+      load: () => _ensureAll(repository),
+      loadingMessage: '워크플로 정보를 불러오는 중입니다...',
+      builder: (context, _) => _buildContent(context, repository),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, ContentRepository repository) {
     final workflow = repository.workflowById(id);
 
     if (workflow == null) {

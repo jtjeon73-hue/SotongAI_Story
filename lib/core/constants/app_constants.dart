@@ -45,6 +45,10 @@ class AppConstants {
   // 도구 비교 최대 개수
   static const int maxCompareTools = 3;
 
+  // 최근 검색어 (SharedPreferences 저장용, 로컬 기기에만 저장)
+  static const String recentSearchesKey = 'recent_searches';
+  static const int maxRecentSearches = 8;
+
   // 애니메이션 지속 시간
   static const Duration shortAnimation = Duration(milliseconds: 180);
   static const Duration mediumAnimation = Duration(milliseconds: 280);
